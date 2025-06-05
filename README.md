@@ -70,5 +70,8 @@ Stimulus/Hotwireで一部のUIを非同期で更新し、UXを向上させる。
 運営側からの招待に関してはMVPでは該当組織のURLを連携するのみとし、招待機能の実装は行わない
 招待機能については、ユーザーから「特定の人をどうやって呼び込むのか」や「誰が招待管理をするのか」などの具体的なニーズやペインが明確になった段階で実装する方が、ユーザーにとって本当に必要な形で提供できるため。
 
-画面遷移図
+■画面遷移図
 https://www.figma.com/board/Tg9Kc1h2uKVBiHViTazKya/RUNTEQ%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C%E3%80%80%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&t=w0zSqCZQTwSHff8m-1
+
+■ER図
+https://dbdiagram.io/d/capstone-exam-68200ff25b2fc4582f0eca1d
