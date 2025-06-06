@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  notification_type: MyString
+  title: MyString
+  body: MyText
+  related_task: one
+  related_application: one
+  is_read: false
+
+two:
+  user: two
+  notification_type: MyString
+  title: MyString
+  body: MyText
+  related_task: two
+  related_application: two
+  is_read: false

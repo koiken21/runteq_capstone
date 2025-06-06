@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  apply_deadline: 2025-06-06
+  required_number_of_people: 1
+  status: MyString
+  organization: one
+
+two:
+  title: MyString
+  description: MyText
+  apply_deadline: 2025-06-06
+  required_number_of_people: 1
+  status: MyString
+  organization: two
