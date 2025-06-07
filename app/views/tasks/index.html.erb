@@ -1,0 +1,50 @@
+<% content_for :title, 'タスク一覧' %>
+
+<h1>タスク一覧</h1>
+
+<div>
+  <%= form_with url: tasks_path, method: :get, local: true do %>
+    <select name="recruitment_status">
+      <option value="">募集状況</option>
+      <option value="open">受付中</option>
+      <option value="closed">終了</option>
+    </select>
+    <select name="application_status">
+      <option value="">応募状況</option>
+      <option value="applied">済</option>
+      <option value="not_applied">未</option>
+    </select>
+    <%= submit_tag '検索' %>
+  <% end %>
+  <%= link_to '新規タスク', new_task_path, style: 'float:right;' %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>募集人数</th>
+      <th>募集状況</th>
+      <th>応募締切</th>
+      <th>応募状況</th>
+      <th>応募中人数</th>
+      <th>詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.required_number_of_people %></td>
+        <td><%= task.status %></td>
+        <td><%= task.apply_deadline %></td>
+        <td><%= task.applications.any? ? '済' : '未' %></td>
+        <td><%= task.applications.count %></td>
+        <td>
+          <%= link_to '閲覧', task_path(task) %> |
+          <%= link_to '編集', edit_task_path(task) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
