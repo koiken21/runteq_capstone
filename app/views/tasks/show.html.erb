@@ -1,0 +1,27 @@
+<% content_for :title, @task.title %>
+
+<h1><%= @task.title %></h1>
+
+<p><%= @task.description %></p>
+
+<table>
+  <tr>
+    <th>募集人数</th>
+    <td><%= @task.required_number_of_people %></td>
+  </tr>
+  <tr>
+    <th>募集状況</th>
+    <td><%= @task.status %></td>
+  </tr>
+  <tr>
+    <th>応募締切</th>
+    <td><%= @task.apply_deadline %></td>
+  </tr>
+  <tr>
+    <th>応募中人数</th>
+    <td><%= @task.applications.count %></td>
+  </tr>
+</table>
+
+<%= link_to '編集', edit_task_path(@task) %> |
+<%= link_to '一覧に戻る', tasks_path %>

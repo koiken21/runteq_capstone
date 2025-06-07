@@ -1,0 +1,29 @@
+<%= form_with(model: task, local: true) do |f| %>
+  <div>
+    <%= f.label :title, 'タスク名' %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :description, '説明' %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :apply_deadline, '応募締切' %><br>
+    <%= f.date_field :apply_deadline %>
+  </div>
+  <div>
+    <%= f.label :required_number_of_people, '募集人数' %><br>
+    <%= f.number_field :required_number_of_people %>
+  </div>
+  <div>
+    <%= f.label :status, '募集状況' %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div>
+    <%= f.label :organization_id, 'Organization' %><br>
+    <%= f.number_field :organization_id %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
