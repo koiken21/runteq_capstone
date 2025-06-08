@@ -34,6 +34,7 @@ services: # コンテナの定義開始
       - node_modules:/myapp/node_modules # node_modulesの永続化
     environment: # 環境変数の設定
       TZ: Asia/Tokyo # タイムゾーンを日本に設定
+      user: "1000:1000" # デプロイのために追加
     ports: # ポート設定
       - "3000:3000" # Rails標準のポート
     depends_on: # 依存関係の設定
