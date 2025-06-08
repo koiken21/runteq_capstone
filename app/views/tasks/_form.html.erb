@@ -24,6 +24,6 @@
     <%= f.collection_select :organization_id, Organization.all, :id, :name, { prompt: '選択してください' } %>
   </div>
   <div>
-    <%= f.submit '新規作成' %>
+    <%= f.submit task.new_record? ? '新規作成' : '編集' %>
   </div>
 <% end %>
