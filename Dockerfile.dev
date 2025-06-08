@@ -25,3 +25,9 @@ RUN gem install bundler
 
 # アプリケーションのコードをコピー
 COPY . /myapp
+# デプロイのために追加分
+ARG UID=1000
+ENV BUNDLE_APP_CONFIG /myapp/.bundle
+
+RUN useradd -m -u $UID rails
+RUN chown rails:rails -R /myapp
