@@ -17,7 +17,7 @@
   </div>
   <div>
     <%= f.label :status, '募集状況' %><br>
-    <%= f.text_field :status %>
+    <%= f.select :status, Task::STATUS_OPTIONS, { prompt: '選択してください' } %>
   </div>
   <div>
     <%= f.label :organization_id, 'Organization' %><br>
