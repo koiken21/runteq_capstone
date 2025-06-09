@@ -1,6 +1,6 @@
 <h1>Complete Registration</h1>
 
-<%= form_with url: complete_registration_users_path, method: :patch, local: true do |f| %>
+<%= form_with model: @user, url: complete_registration_users_path, method: :patch, local: true do |f| %>
   <%= hidden_field_tag :token, params[:token] %>
   <div class="mb-3">
     <%= f.label :mail_address, 'Email' %>

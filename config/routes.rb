@@ -16,5 +16,8 @@ Rails.application.routes.draw do
       patch :complete_registration
     end
   end
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   root "tasks#index"
 end
