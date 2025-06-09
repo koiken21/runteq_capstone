@@ -40,7 +40,12 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:mail_address, :role)
+    permitted = params.require(:user).permit(:mail_address)
+    role = params[:user][:role]
+    if role.present? && role.in?(User.roles.keys)
+      permitted[:role] = role
+    end
+    permitted
   end
 
   def complete_user_params
