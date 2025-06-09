@@ -1,0 +1,13 @@
+<h1>Sign Up</h1>
+
+<%= form_with model: @user, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :role, 'Role' %>
+    <%= f.select :role, User::ROLES.map { |r| [r.humanize, r] }, {}, class: 'form-select' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :mail_address, 'Email' %>
+    <%= f.email_field :mail_address, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Register', class: 'btn btn-primary' %>
+<% end %>

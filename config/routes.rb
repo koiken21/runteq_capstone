@@ -10,5 +10,14 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   resources :tasks
+  resources :users, only: %i[new create] do
+    collection do
+      get :complete_registration
+      patch :complete_registration
+    end
+  end
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   root "tasks#index"
 end

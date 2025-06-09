@@ -1,0 +1,26 @@
+<h1>Complete Registration</h1>
+
+<%= form_with model: @user, url: complete_registration_users_path, method: :patch, local: true do |f| %>
+  <%= hidden_field_tag :token, params[:token] %>
+  <div class="mb-3">
+    <%= f.label :mail_address, 'Email' %>
+    <%= f.email_field :mail_address, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :name, 'User Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :initial_password, 'Initial Password' %>
+    <%= f.password_field :initial_password, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :password, 'New Password' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :password_confirmation, 'New Password Confirmation' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Update', class: 'btn btn-primary' %>
+<% end %>
