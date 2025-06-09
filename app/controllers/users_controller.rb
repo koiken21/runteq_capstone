@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def user_params
     permitted = params.require(:user).permit(:mail_address)
     role = params[:user][:role]
-    if role.present? && role.in?(User.roles.keys)
+    if role.present? && role.in?(User::ROLES)
       permitted[:role] = role
     end
     permitted

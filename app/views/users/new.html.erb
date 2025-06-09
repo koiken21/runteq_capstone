@@ -3,7 +3,7 @@
 <%= form_with url: users_path, method: :post, local: true do |f| %>
   <div class="mb-3">
     <%= f.label :role, 'Role' %>
-    <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, {}, class: 'form-select' %>
+    <%= f.select :role, User::ROLES.map { |r| [r.humanize, r] }, {}, class: 'form-select' %>
   </div>
   <div class="mb-3">
     <%= f.label :mail_address, 'Email' %>

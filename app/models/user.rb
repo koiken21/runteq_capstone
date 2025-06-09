@@ -3,7 +3,20 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  enum role: { admin: 'admin', supporter: 'supporter' }
+  ROLES = %w[admin supporter].freeze
+
+  validates :role, presence: true, inclusion: { in: ROLES }
+
+  scope :admin, -> { where(role: 'admin') }
+  scope :supporter, -> { where(role: 'supporter') }
+
+  def admin?
+    role == 'admin'
+  end
+
+  def supporter?
+    role == 'supporter'
+  end
 
   def generate_registration_token!
     self.registration_token = SecureRandom.hex(10)
