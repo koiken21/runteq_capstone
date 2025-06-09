@@ -3,6 +3,6 @@ class UserMailer < ApplicationMailer
     @user = user
     @initial_password = initial_password
     @url = complete_registration_users_url(token: user.registration_token)
-    mail(to: @user.mail_address, subject: 'Complete your registration')
+    mail(to: @user.mail_address, subject: "Complete your registration")
   end
 end

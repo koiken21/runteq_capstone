@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user_by_token, only: [:complete_registration]
+  before_action :set_user_by_token, only: [ :complete_registration ]
 
   def new
     @user = User.new
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     if @user.save
       @user.generate_registration_token!
       UserMailer.registration_email(@user, initial_password).deliver_now
-      redirect_to main_app.tasks_path, notice: 'Registration email sent.'
+      redirect_to main_app.tasks_path, notice: "Registration email sent."
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,15 +22,15 @@ class UsersController < ApplicationController
   def complete_registration
     if request.patch?
       unless @user && @user.registration_token_valid?
-        redirect_to main_app.tasks_path, alert: 'Invalid token' and return
+        redirect_to main_app.tasks_path, alert: "Invalid token" and return
       end
       unless @user.authenticate(params[:user][:initial_password])
-        flash.now[:alert] = 'Initial password is incorrect'
+        flash.now[:alert] = "Initial password is incorrect"
         render :complete_registration, status: :unprocessable_entity and return
       end
       if @user.update(complete_user_params)
         @user.clear_registration_token!
-        redirect_to main_app.tasks_path, notice: 'Registration completed.'
+        redirect_to main_app.tasks_path, notice: "Registration completed."
       else
         render :complete_registration, status: :unprocessable_entity
       end

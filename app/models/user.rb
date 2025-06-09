@@ -7,15 +7,15 @@ class User < ApplicationRecord
 
   validates :role, presence: true, inclusion: { in: ROLES }
 
-  scope :admin, -> { where(role: 'admin') }
-  scope :supporter, -> { where(role: 'supporter') }
+  scope :admin, -> { where(role: "admin") }
+  scope :supporter, -> { where(role: "supporter") }
 
   def admin?
-    role == 'admin'
+    role == "admin"
   end
 
   def supporter?
-    role == 'supporter'
+    role == "supporter"
   end
 
   def generate_registration_token!
