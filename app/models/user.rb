@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  enum role: { admin: 0, supporter: 1 }
+  enum role: { admin: 'admin', supporter: 'supporter' }
 
   def generate_registration_token!
     self.registration_token = SecureRandom.hex(10)
