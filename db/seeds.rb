@@ -18,7 +18,7 @@ user1 = User.create!(
   mail_address: "alice@example.com",
   role: "admin",
   organization_id: org1.id,
-  encrypted_password: "dummy_password"
+  password: "password"
 )
 
 user2 = User.create!(
@@ -26,7 +26,7 @@ user2 = User.create!(
   mail_address: "bob@example.com",
   role: "supporter",
   organization_id: org1.id,
-  encrypted_password: "dummy_password"
+  password: "password"
 )
 
 user3 = User.create!(
@@ -34,7 +34,7 @@ user3 = User.create!(
   mail_address: "charlie@example.com",
   role: "supporter",
   organization_id: org2.id,
-  encrypted_password: "dummy_password"
+  password: "password"
 )
 
 # Tasks
@@ -43,7 +43,7 @@ task1 = Task.create!(
   description: "Help clean up the local park.",
   apply_deadline: Date.today + 7.days,
   required_number_of_people: 5,
-  status: "open",
+  status: "募集中",
   organization_id: org1.id
 )
 
@@ -52,7 +52,7 @@ task2 = Task.create!(
   description: "Assist with setting up the event venue.",
   apply_deadline: Date.today + 10.days,
   required_number_of_people: 3,
-  status: "open",
+  status: "募集中",
   organization_id: org2.id
 )
 
