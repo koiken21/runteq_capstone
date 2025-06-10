@@ -34,5 +34,12 @@ test:
 # Solid Cable や Solid Queue で利用する各 DB を
 # 同じ DATABASE_URL に接続させる
 production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %> # renderデプロイ用に設定簡略化
+  primary: &production
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %> # renderデプロイ用に設定簡略化
+  cache:
+    <<: *production
+  queue:
+    <<: *production
+  cable:
+    <<: *production
