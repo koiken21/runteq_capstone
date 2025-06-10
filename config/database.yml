@@ -27,7 +27,8 @@ test:
   database: myapp_test
 
 # Production environment
-# Render provides DATABASE_URL which contains the full connection string
+# Render デプロイ用に設定簡略化
+# DATABASE_URL だけで接続情報を指定する
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
