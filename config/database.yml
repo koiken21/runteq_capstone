@@ -8,15 +8,15 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV.fetch("DB_HOST", "db") %>
-  username: <%= ENV.fetch("DB_USERNAME", "postgres") %>
-  password: <%= ENV.fetch("DB_PASSWORD", "password") %>
 
 # Development environment
 # Using postgres service provided by docker-compose
 development:
   <<: *default
   database: myapp_development
+  host: <%= ENV.fetch("DB_HOST", "db") %>
+  username: <%= ENV.fetch("DB_USERNAME", "postgres") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "password") %>
 
 # Test environment
 # Same settings as development but separate database name
@@ -25,21 +25,14 @@ development:
 test:
   <<: *default
   database: myapp_test
+  host: <%= ENV.fetch("DB_HOST", "db") %>
+  username: <%= ENV.fetch("DB_USERNAME", "postgres") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "password") %>
 
 # Production environment
 # Render デプロイ用に設定簡略化
 # Solid Cable や Solid Queue で利用する各 DB を
 # 同じ DATABASE_URL に接続させる
 production:
-  primary: &production_default
-    <<: *default
-    url: <%= ENV["DATABASE_URL"] %>
-  cache:
-    <<: *production_default
-    url: <%= ENV["DATABASE_URL"] %>
-  queue:
-    <<: *production_default
-    url: <%= ENV["DATABASE_URL"] %>
-  cable:
-    <<: *production_default
-    url: <%= ENV["DATABASE_URL"] %>
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %> # renderデプロイ用に設定簡略化
