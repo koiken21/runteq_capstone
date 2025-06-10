@@ -13,7 +13,7 @@ class OrganizationSettingsController < ApplicationController
     @organization = Organization.new(organization_params)
     if @organization.save
       current_user.update(organization: @organization)
-      redirect_to tasks_path, notice: '組織を作成しました。'
+      redirect_to tasks_path, notice: "組織を作成しました。"
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,9 +28,9 @@ class OrganizationSettingsController < ApplicationController
       redirect_to tasks_path and return
     end
     if params[:user].present? && current_user.update(user_organization_params)
-      redirect_to tasks_path, notice: '組織を設定しました。'
+      redirect_to tasks_path, notice: "組織を設定しました。"
     else
-      flash.now[:alert] = '組織を選択してください'
+      flash.now[:alert] = "組織を選択してください"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -46,6 +46,6 @@ class OrganizationSettingsController < ApplicationController
   end
 
   def require_login
-    redirect_to login_path, alert: 'ログインしてください' unless user_signed_in?
+    redirect_to login_path, alert: "ログインしてください" unless user_signed_in?
   end
 end
