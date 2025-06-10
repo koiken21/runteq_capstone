@@ -3,7 +3,11 @@
     <li>プロダクト名</li>
     <li><%= link_to 'タスク一覧', main_app.tasks_path %></li>
     <li><%= link_to '応募一覧', '#' %></li>
-    <li><%= link_to 'ユーザー登録', main_app.new_user_path %></li>
-    <li><%= link_to 'ログイン', '#' %></li>
+    <% unless user_signed_in? %>
+      <li><%= link_to 'ユーザー登録', main_app.new_user_path %></li>
+      <li><%= link_to 'ログイン', login_path %></li>
+    <% else %>
+      <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
+    <% end %>
   </ul>
 </nav>
