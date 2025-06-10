@@ -1,0 +1,11 @@
+<h1>組織を新規作成</h1>
+
+<%= form_with model: @organization, url: organization_setting_path, local: true do |f| %>
+  <div>
+    <%= f.label :name, '組織名' %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.submit '作成' %>
+  </div>
+<% end %>
