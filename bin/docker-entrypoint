@@ -9,6 +9,10 @@ fi
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   ./bin/rails db:prepare
+  if [ "${RUN_SEEDS:-false}" = "true" ]; then
+    echo "== Seeding database =="
+    ./bin/rails db:seed
+  fi
 fi
 
 exec "${@}"

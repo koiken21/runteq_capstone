@@ -35,6 +35,10 @@ services: # コンテナの定義開始
     environment: # 環境変数の設定
       TZ: Asia/Tokyo # タイムゾーンを日本に設定
       user: "1000:1000" # デプロイのために追加
+      # Rails で使用するデータベース接続情報
+      DATABASE_URL: postgres://postgres:password@db:5432/myapp_development
+      # 初期データ投入が必要な場合のみ true に設定
+      #RUN_SEEDS: "true"
     ports: # ポート設定
       - "3000:3000" # Rails標準のポート
     depends_on: # 依存関係の設定
