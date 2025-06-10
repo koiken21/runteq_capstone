@@ -79,3 +79,14 @@ https://dbdiagram.io/d/capstone-exam-68200ff25b2fc4582f0eca1d
 ## ローカル開発用DATABASE_URL
 Docker Composeで起動する`web`サービスでは`DATABASE_URL`環境変数を利用しています。
 リポジトリには`.env.sample`を用意しているので、コピーして`.env`として使用してください。
+
+## 初期データ投入
+開発環境では以下のコマンドでシードデータを投入できます。
+
+```bash
+$ docker-compose exec web rails db:seed
+```
+
+Render へデプロイする際は、`RUN_SEEDS` 環境変数を一時的に `true` にして再起動するか、
+デプロイ後にシェルへ入り `rails db:seed` を実行してください。通常の起動時にはシードを
+実行しないようにしてあります。
