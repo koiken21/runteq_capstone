@@ -16,6 +16,11 @@ Rails.application.routes.draw do
       patch :complete_registration
     end
   end
+
+  get    "login",  to: "sessions#new"
+  post   "login",  to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
+  get    "logout", to: "sessions#destroy"
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
