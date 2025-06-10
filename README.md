@@ -75,3 +75,7 @@ https://www.figma.com/board/Tg9Kc1h2uKVBiHViTazKya/RUNTEQ%E5%8D%92%E6%A5%AD%E5%8
 
 ■ER図
 https://dbdiagram.io/d/capstone-exam-68200ff25b2fc4582f0eca1d
+
+## ローカル開発用DATABASE_URL
+Docker Composeで起動する`web`サービスでは`DATABASE_URL`環境変数を利用しています。
+リポジトリには`.env.sample`を用意しているので、コピーして`.env`として使用してください。
