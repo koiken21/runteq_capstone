@@ -23,7 +23,9 @@
   </tr>
 </table>
 
-<%= link_to '編集', edit_task_path(@task) %> |
+<% if current_user&.admin? %>
+  <%= link_to '編集', edit_task_path(@task) %> |
+<% end %>
 <%= link_to '一覧に戻る', tasks_path %>
 <% if current_user&.supporter? %>
   |
