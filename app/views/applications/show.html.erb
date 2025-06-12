@@ -1,0 +1,55 @@
+<% content_for :title, "応募：#{@task.title} #{@application.supporter.name}" %>
+<h1>応募：<%= @task.title %>（<%= @application.supporter.name %>）</h1>
+
+<% message = case @application.request_status
+            when '見送り'
+              '応募いただき誠にありがとうございました。大変申し訳ございませんが今回はご一緒できませんでした。またの機会にぜひお願いいたします。'
+            when '受諾'
+              '受諾いただき誠にありがとうございました。後ほど運営から詳細の連絡がご登録のメールアドレスなどに行われます。'
+            when '辞退'
+              '応募いただき誠にありがとうございました。またの機会にぜひお願いいたします。'
+            end %>
+<% if message %>
+  <p><%= message %></p>
+<% end %>
+
+<table>
+  <tr>
+    <th>応募意向</th>
+    <td><%= @application.application_status %></td>
+  </tr>
+  <tr>
+    <th>経験有無</th>
+    <td><%= @application.experience %></td>
+  </tr>
+  <tr>
+    <th>稼働可能時間</th>
+    <td><%= @application.uptime %></td>
+  </tr>
+  <tr>
+    <th>サポーターコメント</th>
+    <td><%= simple_format(@application.comment_supporter) %></td>
+  </tr>
+</table>
+
+<% case @application.request_status %>
+<% when '見送り', '受諾', '辞退' %>
+  <%= link_to 'タスクに戻る', task_path(@task) %>
+<% when '依頼' %>
+  <div>
+    <label>運営コメント</label><br>
+    <%= simple_format(@application.comment_organization) %>
+  </div>
+  <%= form_with(model: @application, url: application_path(@application), method: :patch, local: true) do |f| %>
+    <%= hidden_field_tag 'application[request_status]', '受諾' %>
+    <%= f.submit '受諾' %>
+  <% end %>
+  <%= form_with(model: @application, url: application_path(@application), method: :patch, local: true) do |f| %>
+    <%= hidden_field_tag 'application[request_status]', '辞退' %>
+    <%= f.submit '辞退' %>
+  <% end %>
+  <%= link_to 'タスクに戻る', task_path(@task) %>
+<% else %>
+  <p>運営からの返信をお待ちください。</p>
+  <%= link_to 'タスクに戻る', task_path(@task) %>
+<% end %>

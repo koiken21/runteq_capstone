@@ -1,7 +1,9 @@
 class ApplicationsController < ApplicationController
-  before_action :require_supporter
   before_action :set_task_from_params, only: %i[new create]
-  before_action :set_application, only: %i[edit update]
+  before_action :set_application, only: %i[edit update show]
+  before_action :require_supporter, only: %i[new create]
+  before_action :require_owner, only: %i[show]
+  before_action :require_admin_or_owner, only: %i[edit update]
 
   def new
     @application = @task.applications.build
@@ -21,15 +23,47 @@ class ApplicationsController < ApplicationController
 
   def edit
     @task = @application.task
+    if current_user.supporter? && @application.request_status.present?
+      redirect_to application_path(@application) and return
+    end
   end
 
   def update
     @task = @application.task
-    if @application.update(application_params)
-      redirect_to @task, notice: "更新が完了しました。運営の返信をお待ちください"
+    if current_user.admin?
+      if @application.update(admin_application_params)
+        notice = if @application.request_status == "見送り"
+                   "返信が完了しました。"
+        else
+                   "返信が完了しました。サポーターの返信をお待ちください"
+        end
+        redirect_to @task, notice: notice
+      else
+        flash.now[:alert] = "返信に失敗しました、お手数ですが再度返信を試みてください"
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      if @application.request_status.present?
+        redirect_to application_path(@application) and return
+      end
+      if @application.update(supporter_application_params)
+        msg = if supporter_application_params[:request_status] == "受諾"
+                "受諾が完了しました。"
+        elsif supporter_application_params[:request_status] == "辞退"
+                "辞退が完了しました。"
+        else
+                "更新が完了しました。運営の返信をお待ちください"
+        end
+        redirect_to @task, notice: msg
+      else
+        flash.now[:alert] = "返信に失敗しました、お手数ですが再度返信を試みてください"
+        render :edit, status: :unprocessable_entity
+      end
     end
+  end
+
+  def show
+    @task = @application.task
   end
 
   private
@@ -48,5 +82,24 @@ class ApplicationsController < ApplicationController
 
   def application_params
     params.require(:application).permit(:application_status, :experience, :uptime, :comment_supporter)
+  end
+
+  def supporter_application_params
+    params.require(:application).permit(:application_status, :experience, :uptime, :comment_supporter, :request_status)
+  end
+
+  def admin_application_params
+    params.require(:application).permit(:request_status, :comment_organization)
+  end
+
+  def require_owner
+    unless current_user&.supporter? && @application.supporter == current_user
+      redirect_to tasks_path
+    end
+  end
+
+  def require_admin_or_owner
+    return if current_user&.admin?
+    require_owner
   end
 end

@@ -60,10 +60,10 @@ task2 = Task.create!(
 app1 = Application.create!(
   task_id: task1.id,
   supporter_id: user2.id,
-  application_status: "pending",
-  request_status: "waiting",
-  comment_supporter: "I'm available on weekends.",
-  comment_organization: "",
-  experience: "Event volunteering",
+  application_status: "応募",
+  request_status: "依頼",
+  comment_supporter: "週末空いてます.",
+  comment_organization: "是非お願いします",
+  experience: "経験有",
   uptime: 4
 )

@@ -1,4 +1,20 @@
-<% content_for :title, "応募編集：#{@task.title}" %>
-<h1>応募編集：<%= @task.title %></h1>
-<%= render 'form', application: @application %>
+<% if current_user.admin? %>
+  <% content_for :title, "応募返信：#{@task.title}" %>
+  <h1>応募返信：<%= @task.title %></h1>
+  <% if @application.request_status == '辞退' %>
+    <p>依頼は辞退されました</p>
+  <% elsif @application.application_status == '取り下げ' %>
+    <p>応募は取り下げられました</p>
+  <% end %>
+  <%= render 'admin_form', application: @application %>
+<% else %>
+  <% content_for :title, "応募編集：#{@task.title}" %>
+  <h1>応募編集：<%= @task.title %></h1>
+  <% if @application.application_status == '取り下げ' %>
+    <p>応募は取り下げられました</p>
+  <% elsif @application.request_status.nil? %>
+    <p>運営からの返信をお待ちください。</p>
+  <% end %>
+  <%= render 'form', application: @application %>
+<% end %>
 <%= link_to 'タスクに戻る', task_path(@task) %>
