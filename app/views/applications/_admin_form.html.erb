@@ -1,0 +1,39 @@
+<%= form_with(model: application, local: true) do |f| %>
+  <div>
+    <label>応募意向</label><br>
+    <%= application.application_status %>
+  </div>
+  <div>
+    <label>経験有無</label><br>
+    <%= application.experience %>
+  </div>
+  <div>
+    <label>稼働時間</label><br>
+    <%= application.uptime %>
+  </div>
+  <div>
+    <label>サポーターコメント</label><br>
+    <%= simple_format(application.comment_supporter) %>
+  </div>
+  <div>
+    <%= f.label :request_status, '依頼状況' %><br>
+    <% if application.request_status.in?(%w[受諾 辞退]) %>
+      <%= application.request_status %>
+    <% elsif application.application_status == '応募' %>
+      <%= f.select :request_status, ['依頼', '見送り'], include_blank: true %>
+    <% else %>
+      <%= application.request_status.presence || '未返信' %>
+    <% end %>
+  </div>
+  <div>
+    <%= f.label :comment_organization, '運営コメント' %><br>
+    <% if application.request_status.in?(%w[受諾 辞退]) %>
+      <%= simple_format(application.comment_organization) %>
+    <% else %>
+      <%= f.text_area :comment_organization %>
+    <% end %>
+  </div>
+  <% if application.application_status == '応募' && !application.request_status.in?(%w[受諾 辞退]) %>
+    <div><%= f.submit '決定' %></div>
+  <% end %>
+<% end %>

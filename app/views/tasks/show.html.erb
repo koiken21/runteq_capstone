@@ -24,6 +24,34 @@
 </table>
 
 <% if current_user&.admin? %>
+  <h2>応募一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>サポーター名</th>
+        <th>応募状況</th>
+        <th>運営依頼状況</th>
+        <th>経験有無</th>
+        <th>稼働可能時間</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @task.applications.each do |app| %>
+        <tr>
+          <td><%= app.supporter.name %></td>
+          <td><%= app.application_status %></td>
+          <td><%= app.request_status.presence || '未返信' %></td>
+          <td><%= app.experience %></td>
+          <td><%= app.uptime %></td>
+          <td><%= link_to '返信', edit_application_path(app) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if current_user&.admin? %>
   <%= link_to '編集', edit_task_path(@task) %> |
 <% end %>
 <%= link_to '一覧に戻る', tasks_path %>
