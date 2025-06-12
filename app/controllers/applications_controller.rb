@@ -32,11 +32,11 @@ class ApplicationsController < ApplicationController
     @task = @application.task
     if current_user.admin?
       if @application.update(admin_application_params)
-        notice = if @application.request_status == '見送り'
-                   '返信が完了しました。'
-                 else
-                   '返信が完了しました。サポーターの返信をお待ちください'
-                 end
+        notice = if @application.request_status == "見送り"
+                   "返信が完了しました。"
+        else
+                   "返信が完了しました。サポーターの返信をお待ちください"
+        end
         redirect_to @task, notice: notice
       else
         flash.now[:alert] = "返信に失敗しました、お手数ですが再度返信を試みてください"
@@ -47,16 +47,16 @@ class ApplicationsController < ApplicationController
         redirect_to application_path(@application) and return
       end
       if @application.update(supporter_application_params)
-        msg = if supporter_application_params[:request_status] == '受諾'
-                '受諾が完了しました。'
-              elsif supporter_application_params[:request_status] == '辞退'
-                '辞退が完了しました。'
-              else
-                '更新が完了しました。運営の返信をお待ちください'
-              end
+        msg = if supporter_application_params[:request_status] == "受諾"
+                "受諾が完了しました。"
+        elsif supporter_application_params[:request_status] == "辞退"
+                "辞退が完了しました。"
+        else
+                "更新が完了しました。運営の返信をお待ちください"
+        end
         redirect_to @task, notice: msg
       else
-        flash.now[:alert] = '返信に失敗しました、お手数ですが再度返信を試みてください'
+        flash.now[:alert] = "返信に失敗しました、お手数ですが再度返信を試みてください"
         render :edit, status: :unprocessable_entity
       end
     end
