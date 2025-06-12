@@ -1,4 +1,10 @@
-<% content_for :title, "応募編集：#{@task.title}" %>
-<h1>応募編集：<%= @task.title %></h1>
-<%= render 'form', application: @application %>
+<% if current_user.admin? %>
+  <% content_for :title, "応募返信：#{@task.title}" %>
+  <h1>応募返信：<%= @task.title %></h1>
+  <%= render 'admin_form', application: @application %>
+<% else %>
+  <% content_for :title, "応募編集：#{@task.title}" %>
+  <h1>応募編集：<%= @task.title %></h1>
+  <%= render 'form', application: @application %>
+<% end %>
 <%= link_to 'タスクに戻る', task_path(@task) %>
