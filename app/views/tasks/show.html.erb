@@ -59,7 +59,7 @@
   |
   <% application = @task.applications.find_by(supporter: current_user) %>
   <% if application %>
-    <%= link_to '応募内容を編集', edit_application_path(application) %>
+    <%= link_to '応募内容を見る', application_path(application) %>
   <% else %>
     <%= link_to '応募する', new_application_path(task_id: @task.id) %>
   <% end %>
