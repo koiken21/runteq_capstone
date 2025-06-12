@@ -2,7 +2,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    if user_signed_in?
+      @tasks = Task.where(organization_id: current_user.organization_id)
+      @tasks = @tasks.where(status: %w[募集中 募集終了]) if current_user.supporter?
+    else
+      @tasks = Task.all
+    end
   end
 
   def show
