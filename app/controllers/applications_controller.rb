@@ -23,6 +23,9 @@ class ApplicationsController < ApplicationController
 
   def edit
     @task = @application.task
+    if current_user.supporter? && @application.request_status.present?
+      redirect_to application_path(@application) and return
+    end
   end
 
   def update
@@ -35,6 +38,9 @@ class ApplicationsController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
+      if @application.request_status.present?
+        redirect_to application_path(@application) and return
+      end
       if @application.update(supporter_application_params)
         msg = if supporter_application_params[:request_status] == '受諾'
                 '受諾が完了しました。'

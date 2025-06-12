@@ -5,6 +5,9 @@
 <% else %>
   <% content_for :title, "応募編集：#{@task.title}" %>
   <h1>応募編集：<%= @task.title %></h1>
+  <% if @application.request_status.nil? %>
+    <p>運営からの返信をお待ちください。</p>
+  <% end %>
   <%= render 'form', application: @application %>
 <% end %>
 <%= link_to 'タスクに戻る', task_path(@task) %>
