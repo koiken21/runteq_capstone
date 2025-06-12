@@ -69,6 +69,8 @@
       <%= link_to '応募内容を見る', application_path(application) %>
     <% end %>
   <% else %>
-    <%= link_to '応募する', new_application_path(task_id: @task.id) %>
+    <% if @task.status == "募集中" %>
+      <%= link_to '応募する', new_application_path(task_id: @task.id) %>
+    <% end %>
   <% end %>
 <% end %>
