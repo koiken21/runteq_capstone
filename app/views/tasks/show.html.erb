@@ -18,6 +18,10 @@
     <td><%= @task.apply_deadline %></td>
   </tr>
   <tr>
+    <th>組織</th>
+    <td><%= @task.organization.name %></td>
+  </tr>
+  <tr>
     <th>応募中人数</th>
     <td><%= @task.applications.count %></td>
   </tr>

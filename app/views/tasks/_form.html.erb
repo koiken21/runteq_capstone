@@ -20,10 +20,6 @@
     <%= f.select :status, Task::STATUS_OPTIONS, { prompt: '選択してください' } %>
   </div>
   <div>
-    <%= f.label :organization_id, '組織' %><br>
-    <%= f.collection_select :organization_id, Organization.all, :id, :name, { prompt: '選択してください' } %>
-  </div>
-  <div>
     <%= f.submit task.new_record? ? '新規作成' : '更新' %>
   </div>
 <% end %>

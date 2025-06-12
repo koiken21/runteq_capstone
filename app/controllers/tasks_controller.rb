@@ -2,7 +2,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    if user_signed_in?
+      @tasks = Task.where(organization_id: current_user.organization_id)
+      @tasks = @tasks.where(status: %w[募集中 募集終了]) if current_user.supporter?
+    else
+      @tasks = Task.all
+    end
   end
 
   def show
@@ -10,6 +15,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @task.organization = current_user.organization if current_user&.admin?
   end
 
   def edit
@@ -17,6 +23,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.organization = current_user.organization if current_user&.admin?
     if @task.save
       redirect_to @task, notice: "Task was successfully created."
     else
@@ -44,6 +51,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :apply_deadline, :required_number_of_people, :status, :organization_id)
+    params.require(:task).permit(:title, :description, :apply_deadline, :required_number_of_people, :status)
   end
 end
