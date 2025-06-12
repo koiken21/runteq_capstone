@@ -1,0 +1,4 @@
+<% content_for :title, "応募編集：#{@task.title}" %>
+<h1>応募編集：<%= @task.title %></h1>
+<%= render 'form', application: @application %>
+<%= link_to 'タスクに戻る', task_path(@task) %>

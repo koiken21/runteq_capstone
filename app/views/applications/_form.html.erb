@@ -1,0 +1,30 @@
+<%= form_with(model: application, local: true) do |f| %>
+  <%= hidden_field_tag 'application[task_id]', @task.id %>
+  <% if application.new_record? %>
+    <div>
+      <label>応募意向</label><br>
+      応募
+      <%= hidden_field_tag 'application[application_status]', '応募' %>
+    </div>
+  <% else %>
+    <div>
+      <%= f.label :application_status, '応募意向' %><br>
+      <%= f.select :application_status, ['応募', '取り下げ'] %>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :experience, 'この件に関するご経験の有無' %><br>
+    <%= f.select :experience, ['経験有', '経験なし'] %>
+  </div>
+  <div>
+    <%= f.label :uptime, 'どれくらい時間を割けるか（月にX時間）' %><br>
+    <%= f.number_field :uptime %>
+  </div>
+  <div>
+    <%= f.label :comment_supporter, 'サポーターコメント' %><br>
+    <%= f.text_area :comment_supporter %>
+  </div>
+  <div>
+    <%= f.submit application.new_record? ? '応募' : '更新' %>
+  </div>
+<% end %>
