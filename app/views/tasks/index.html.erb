@@ -16,7 +16,9 @@
     </select>
     <%= submit_tag '検索' %>
   <% end %>
-  <%= link_to '新規タスク', new_task_path, style: 'float:right;' %>
+  <% if current_user&.admin? %>
+    <%= link_to '新規タスク', new_task_path, style: 'float:right;' %>
+  <% end %>
 </div>
 
 <table>
@@ -41,8 +43,10 @@
         <td><%= task.applications.any? ? '済' : '未' %></td>
         <td><%= task.applications.count %></td>
         <td>
-          <%= link_to '閲覧', task_path(task) %> |
-          <%= link_to '編集', edit_task_path(task) %>
+          <%= link_to '閲覧', task_path(task) %>
+          <% if current_user&.admin? %>
+            | <%= link_to '編集', edit_task_path(task) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

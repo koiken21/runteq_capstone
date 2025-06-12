@@ -65,5 +65,5 @@ app1 = Application.create!(
   comment_supporter: "I'm available on weekends.",
   comment_organization: "",
   experience: "Event volunteering",
-  uptime: "weekends"
+  uptime: 4
 )

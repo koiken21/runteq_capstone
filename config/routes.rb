@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   resources :tasks
+  resources :applications, only: %i[new create edit update]
   resource :organization_setting, only: %i[new create edit update]
   resources :users, only: %i[new create] do
     collection do

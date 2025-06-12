@@ -23,5 +23,16 @@
   </tr>
 </table>
 
-<%= link_to '編集', edit_task_path(@task) %> |
+<% if current_user&.admin? %>
+  <%= link_to '編集', edit_task_path(@task) %> |
+<% end %>
 <%= link_to '一覧に戻る', tasks_path %>
+<% if current_user&.supporter? %>
+  |
+  <% application = @task.applications.find_by(supporter: current_user) %>
+  <% if application %>
+    <%= link_to '応募内容を編集', edit_application_path(application) %>
+  <% else %>
+    <%= link_to '応募する', new_application_path(task_id: @task.id) %>
+  <% end %>
+<% end %>
