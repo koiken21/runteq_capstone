@@ -32,7 +32,12 @@ class ApplicationsController < ApplicationController
     @task = @application.task
     if current_user.admin?
       if @application.update(admin_application_params)
-        redirect_to @task, notice: "返信が完了しました。サポーターの返信をお待ちください"
+        notice = if @application.request_status == '見送り'
+                   '返信が完了しました。'
+                 else
+                   '返信が完了しました。サポーターの返信をお待ちください'
+                 end
+        redirect_to @task, notice: notice
       else
         flash.now[:alert] = "返信に失敗しました、お手数ですが再度返信を試みてください"
         render :edit, status: :unprocessable_entity

@@ -1,6 +1,11 @@
 <% if current_user.admin? %>
   <% content_for :title, "応募返信：#{@task.title}" %>
   <h1>応募返信：<%= @task.title %></h1>
+  <% if @application.request_status == '辞退' %>
+    <p>依頼は辞退されました</p>
+  <% elsif @application.application_status == '取り下げ' %>
+    <p>応募は取り下げされました</p>
+  <% end %>
   <%= render 'admin_form', application: @application %>
 <% else %>
   <% content_for :title, "応募編集：#{@task.title}" %>
