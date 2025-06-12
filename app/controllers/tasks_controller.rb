@@ -15,6 +15,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @task.organization = current_user.organization if current_user&.admin?
   end
 
   def edit
@@ -22,6 +23,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.organization = current_user.organization if current_user&.admin?
     if @task.save
       redirect_to @task, notice: "Task was successfully created."
     else
@@ -49,6 +51,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :apply_deadline, :required_number_of_people, :status, :organization_id)
+    params.require(:task).permit(:title, :description, :apply_deadline, :required_number_of_people, :status)
   end
 end
