@@ -1,6 +1,18 @@
 <% content_for :title, "応募：#{@task.title} #{@application.supporter.name}" %>
 <h1>応募：<%= @task.title %>（<%= @application.supporter.name %>）</h1>
 
+<% message = case @application.request_status
+            when '見送り'
+              '応募いただき誠にありがとうございました。大変申し訳ございませんが今回はご一緒できませんでした。またの機会にぜひお願いいたします。'
+            when '受諾'
+              '受諾いただき誠にありがとうございました。後ほど運営から詳細の連絡がご登録のメールアドレスなどに行われます。'
+            when '辞退'
+              '応募いただき誠にありがとうございました。またの機会にぜひお願いいたします。'
+            end %>
+<% if message %>
+  <p><%= message %></p>
+<% end %>
+
 <table>
   <tr>
     <th>応募意向</th>
@@ -21,14 +33,7 @@
 </table>
 
 <% case @application.request_status %>
-<% when '見送り' %>
-  <p>応募いただき誠にありがとうございました。大変申し訳ございませんが今回はご一緒できませんでした。またの機会にぜひお願いいたします。</p>
-  <%= link_to 'タスクに戻る', task_path(@task) %>
-<% when '受諾' %>
-  <p>受諾いただき誠にありがとうございました。後ほど運営から詳細の連絡がご登録のメールアドレスなどに行われます。</p>
-  <%= link_to 'タスクに戻る', task_path(@task) %>
-<% when '辞退' %>
-  <p>応募いただき誠にありがとうございました。またの機会にぜひお願いいたします。</p>
+<% when '見送り', '受諾', '辞退' %>
   <%= link_to 'タスクに戻る', task_path(@task) %>
 <% when '依頼' %>
   <div>
