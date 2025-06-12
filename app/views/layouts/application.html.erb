@@ -24,7 +24,7 @@
 
   <body>
     <%= render 'shared/navbar' %>
-    <% flash.each_value do |msg| %>
+    <% flash.each do |_type, msg| %>
       <script>
         alert("<%= j msg %>");
       </script>
