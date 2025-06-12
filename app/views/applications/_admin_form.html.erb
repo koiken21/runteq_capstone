@@ -25,14 +25,16 @@
       <%= application.request_status.presence || '未返信' %>
     <% end %>
   </div>
-  <div>
-    <%= f.label :comment_organization, '運営コメント' %><br>
-    <% if application.request_status.in?(%w[受諾 辞退]) %>
-      <%= simple_format(application.comment_organization) %>
-    <% else %>
-      <%= f.text_area :comment_organization %>
-    <% end %>
-  </div>
+  <% unless application.application_status == '取り下げ' %>
+    <div>
+      <%= f.label :comment_organization, '運営コメント' %><br>
+      <% if application.request_status.in?(%w[受諾 辞退]) %>
+        <%= simple_format(application.comment_organization) %>
+      <% else %>
+        <%= f.text_area :comment_organization %>
+      <% end %>
+    </div>
+  <% end %>
   <% if application.application_status == '応募' && !application.request_status.in?(%w[受諾 辞退]) %>
     <div><%= f.submit '決定' %></div>
   <% end %>
