@@ -1,6 +1,13 @@
-<nav>
-  <ul style="list-style:none;display:flex;gap:10px;padding:0;">
-    <li>プロボノボード</li>
+<nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+  <!-- 左：ロゴ -->
+  <ul style="list-style: none; display: flex; margin: 0; padding: 0;">
+    <li style="display: flex; align-items: center;">
+      <%= image_tag 'logo_probonoboard.png', alt: 'プロボノボード', height: '100' %>
+    </li>
+  </ul>
+
+  <!-- 右：リンク群 -->
+  <ul style="list-style: none; display: flex; gap: 10px; margin: 0; padding: 0;">
     <li><%= link_to 'タスク一覧', main_app.tasks_path %></li>
     <% if user_signed_in? %>
       <li><%= link_to '応募一覧', '#' %></li>
