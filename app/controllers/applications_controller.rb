@@ -23,7 +23,8 @@ class ApplicationsController < ApplicationController
 
   def edit
     @task = @application.task
-    if current_user.supporter? && @application.request_status.present?
+    if current_user.supporter? && @application.request_status.present? &&
+         @application.request_status != "依頼"
       redirect_to application_path(@application) and return
     end
   end
@@ -43,7 +44,7 @@ class ApplicationsController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
-      if @application.request_status.present?
+      if @application.request_status.present? && @application.request_status != "依頼"
         redirect_to application_path(@application) and return
       end
       if @application.update(supporter_application_params)
