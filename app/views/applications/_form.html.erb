@@ -1,5 +1,6 @@
-<%= form_with(model: application, local: true) do |f| %>
-  <%= hidden_field_tag 'application[task_id]', @task.id %>
+<%= form_with(model: application,
+              url: application.new_record? ? applications_path(task_id: @task.id) : application_path(application),
+              local: true) do |f| %>
   <% if application.new_record? %>
     <div>
       <label>応募意向</label><br>
