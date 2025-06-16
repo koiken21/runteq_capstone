@@ -38,7 +38,7 @@ Rails.application.configure do
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV["RAILS_LOG_LEVEL"] || "info"
 
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
@@ -58,16 +58,28 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = {
+    host: ENV["MAILER_HOST"] || "example.com"
+  }
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
+  # Use SMTP for email delivery in production. Credentials are provided via
+  # environment variables so that both Docker Compose and Render deployments can
+  # share the same configuration mechanism.
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV["SMTP_ADDRESS"] || "smtp.example.com",
+    port: (ENV["SMTP_PORT"] || 587).to_i,
+    user_name: ENV["SMTP_USERNAME"],
+    password: ENV["SMTP_PASSWORD"],
+    domain: ENV["SMTP_DOMAIN"],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  # Default "from" address for outgoing emails.
+  config.action_mailer.default_options = {
+    from: ENV["MAIL_FROM"] || "from@example.com"
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
